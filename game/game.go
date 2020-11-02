@@ -2,7 +2,6 @@ package game
 
 import (
 	"bufio"
-	"fmt"
 	"os"
 )
 
@@ -48,12 +47,5 @@ func LoadLevelFile(filename string) *Level {
 		level.Map[i] = make([]string, longRow)
 
 	}
-
-	for _, each_ln := range text {
-		for _, i := range each_ln {
-			fmt.Printf("%c", each_ln[i])
-		}
-		fmt.Println()
-	}
-	return nil
+	return level
 }
