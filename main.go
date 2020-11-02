@@ -1,12 +1,10 @@
 package main
 
-import (
-	"golang_sdl_test/game"
-)
+import "golang_sdl_test/game"
 
 const (
-	screenWidth  = 800
-	screenHeight = 800
+	screenWidth  = 1600 //50 tiles - colonnes
+	screenHeight = 960  //30 tiles - lignes
 )
 
 func main() {
@@ -36,17 +34,40 @@ func main() {
 	// }
 	// defer renderer.Destroy()
 
+	// //chargement de l'image
+	// img, err := sdl.LoadBMP("game/images/tiles.bmp")
+
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer img.Free()
+
+	// //chargement d'une texture pour l'image
+	// mapTexture, err := renderer.CreateTextureFromSurface(img)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer mapTexture.Destroy()
+
 	// for {
 	// 	//get event, et boucle sur la pile d'event
 	// 	for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
 	// 		switch event.(type) {
+	// 		//les event sdl sont des pointeurs
 	// 		case *sdl.QuitEvent:
 	// 			return
 	// 		}
 	// 	}
-	// 	renderer.SetDrawColor(255, 133, 255, 255)
+	// 	renderer.SetDrawColor(255, 246, 255, 255)
 	// 	//remplie la fenetre avec la couleur
 	// 	renderer.Clear()
+	// 	//copie de la texture dans le renderer
+	// 	//			  //texture à copier
+	// 	renderer.Copy(mapTexture,
+	// 		//src : partie de la texture à afficher
+	// 		&sdl.Rect{X: 32 * 8, Y: 0, W: 32, H: 32},
+	// 		//dst :  rectangle sur la fenetre où sera affiché la texture
+	// 		&sdl.Rect{X: 0, Y: 0, W: 100, H: 100})
 	// 	//affiche le renderer
 	// 	renderer.Present()
 	// }
