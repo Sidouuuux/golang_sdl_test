@@ -44,8 +44,6 @@ func LoadLevelFile(filename string) *Level {
 		row++
 	}
 
-	fmt.Println("ligne plus longue = ", longestRow, ", nb lignes = ", row)
-
 	level.Map = make([][]string, row)
 	for i := range level.Map {
 		level.Map[i] = make([]string, longestRow)
@@ -58,6 +56,5 @@ func LoadLevelFile(filename string) *Level {
 		}
 	}
 
-	fmt.Println(level.Map[1][0])
-	return nil
+	return level
 }
