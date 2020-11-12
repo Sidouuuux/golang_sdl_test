@@ -12,7 +12,7 @@ type player struct {
 
 func newPlayer(renderer *sdl.Renderer) (p player, err error) {
 	//chargement de l'image
-	img, err := sdl.LoadBMP("game/images/tiles.bmp")
+	img, err := sdl.LoadBMP("game/images/xmas_player.bmp")
 
 	if err != nil {
 		return player{}, fmt.Errorf("création ouverture fichier joueur : %v", err)
@@ -33,7 +33,7 @@ func (p *player) DrawPlayer(renderer *sdl.Renderer) {
 	//			  //texture à copier
 	renderer.Copy(p.tex,
 		//src : partie de la texture à afficher
-		&sdl.Rect{X: 32 * 8, Y: 0, W: 32, H: 32},
+		&sdl.Rect{X: 0, Y: 0, W: 32, H: 32},
 		//dst :  rectangle sur la fenetre où sera affiché la texture
-		&sdl.Rect{X: 0, Y: 0, W: 100, H: 100})
+		&sdl.Rect{X: 0, Y: 0, W: 48, H: 48})
 }
