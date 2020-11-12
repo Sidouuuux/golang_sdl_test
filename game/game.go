@@ -2,50 +2,62 @@ package game
 
 import (
 	"bufio"
+	"fmt"
+	"io/ioutil"
 	"os"
+	"strings"
 )
 
-// type Tile rune
+type Tile rune
 
-// const (
-// 	Wall  Tile = '#'
-// 	Door  Tile = '|'
-// 	Floor Tile = '.'
-// )
+const (
+	Wall  Tile = '#'
+	Door  Tile = '|'
+	Floor Tile = '.'
+)
 
 type Level struct {
 	Map [][]string
 }
 
 func LoadLevelFile(filename string) *Level {
-	file, err := os.Open(filename)
 
+	filebuffer, err := ioutil.ReadFile(filename)
 	if err != nil {
-		panic(err)
+		fmt.Println("ouverture du fichier:", err)
+		os.Exit(1)
 	}
 
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
+	inputdata := string(filebuffer)
+	data := bufio.NewScanner(strings.NewReader(inputdata))
 
 	level := &Level{}
 
 	var text []string
-	longRow := 0
-	col := 0
-
-	for scanner.Scan() {
-		// fmt.Println(scanner.Text())
-		text = append(text, scanner.Text())
-		if len(text[col]) > longRow {
-			longRow = len(text[col])
+	longestRow := 0
+	row := 0
+	for data.Scan() {
+		text = append(text, data.Text())
+		if len(text[row]) > longestRow {
+			longestRow = len(text[row])
 		}
-		col++
+		row++
 	}
 
+	fmt.Println("ligne plus longue = ", longestRow, ", nb lignes = ", row)
+
+	level.Map = make([][]string, row)
 	for i := range level.Map {
-		level.Map[i] = make([]string, longRow)
-
+		level.Map[i] = make([]string, longestRow)
 	}
-	return level
+
+	// lines := 0
+	for i := range level.Map {
+		for j := range level.Map[i] {
+			level.Map[i][j] = string(text[i][j])
+		}
+	}
+
+	fmt.Println(level.Map[1][0])
+	return nil
 }
