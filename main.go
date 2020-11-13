@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"golang_sdl_test/game"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -9,17 +10,22 @@ import (
 const (
 	screenWidth  = 1600 //50 tiles - colonnes
 	screenHeight = 960  //30 tiles - lignes
+	textureSize  = 48
 )
 
 func main() {
-
+	var files = [...]string{"game/images/xmas_player1.bmp", "game/images/xmas_player2.bmp"}
+	var playersPosition = [2][2]int{
+		{0, 0},
+		{(screenWidth - textureSize), (screenHeight - textureSize)},
+	}
 	//initialisation de sdl
 	if err := sdl.Init(sdl.INIT_EVERYTHING); err != nil {
 		fmt.Println("initialisation de sdl :", err)
 		return
 	}
-	// level := game.LoadLevelFile("game/map/level.map")
-	// fmt.Println(level)
+	level := game.LoadLevelFile("game/map/level.map")
+	fmt.Println("laaa : ", level.Map[0][0])
 	// création d'une fenetre
 	window, err := sdl.CreateWindow(
 		//		  //position de la fenetre en x et y : mis en undefined						   //accélération avec OpenGL
@@ -39,7 +45,13 @@ func main() {
 	}
 	defer renderer.Destroy()
 
-	player1, err := newPlayer(renderer)
+	player1, err := newPlayer(renderer, files[0], playersPosition[0])
+	if err != nil {
+		fmt.Println("création du joueur:", err)
+		return
+	}
+
+	player2, err := newPlayer(renderer, files[1], playersPosition[1])
 	if err != nil {
 		fmt.Println("création du joueur:", err)
 		return
@@ -58,7 +70,9 @@ func main() {
 		//remplie la fenetre avec la couleur
 		renderer.Clear()
 
+		movePlayers(&player1, &player2)
 		player1.DrawPlayer(renderer)
+		player2.DrawPlayer(renderer)
 		//affiche le renderer
 		renderer.Present()
 	}

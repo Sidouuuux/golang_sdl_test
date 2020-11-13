@@ -8,14 +8,6 @@ import (
 	"strings"
 )
 
-type Tile rune
-
-const (
-	Wall  Tile = '#'
-	Door  Tile = '|'
-	Floor Tile = '.'
-)
-
 type Level struct {
 	Map [][]string
 }
