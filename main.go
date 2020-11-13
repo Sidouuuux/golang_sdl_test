@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"golang_sdl_test/game"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -14,7 +13,7 @@ const (
 )
 
 func main() {
-	var files = [...]string{"game/images/xmas_player1.bmp", "game/images/xmas_player2.bmp"}
+	var files = [...]string{"game/images/xmas_player1.bmp", "game/images/xmas_player2.bmp", "game/images/map1.bmp"}
 	var playersPosition = [2][2]int{
 		{0, 0},
 		{(screenWidth - textureSize), (screenHeight - textureSize)},
@@ -24,8 +23,7 @@ func main() {
 		fmt.Println("initialisation de sdl :", err)
 		return
 	}
-	level := game.LoadLevelFile("game/map/level.map")
-	fmt.Println("laaa : ", level.Map[0][0])
+
 	// création d'une fenetre
 	window, err := sdl.CreateWindow(
 		//		  //position de la fenetre en x et y : mis en undefined						   //accélération avec OpenGL
@@ -70,7 +68,10 @@ func main() {
 		//remplie la fenetre avec la couleur
 		renderer.Clear()
 
+		level := LoadLevelFile("game/map/level.map")
+
 		movePlayers(&player1, &player2)
+		printMap(renderer, level, files[2])
 		player1.DrawPlayer(renderer)
 		player2.DrawPlayer(renderer)
 		//affiche le renderer
